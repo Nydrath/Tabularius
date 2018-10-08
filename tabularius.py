@@ -33,8 +33,8 @@ async def on_member_remove(member):
 
 @myself.event
 async def on_message_delete(message):
-    channels = member.server.channels
+    channels = message.server.channels
     botlog = [channel for channel in channels if channel.id == "311888667947827200"][0]
-    await myself.send_message(botlog, message.author.mention + " has deleted a message: " + message.content)
+    await myself.send_message(botlog, message.author.mention + " has deleted a message from "+message.channel.name+": " + message.content)
 
 myself.run(clientdata["token"])
