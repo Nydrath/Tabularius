@@ -14,7 +14,7 @@ async def on_message(message):
             if not offeringreads in message.author.roles:
                 await myself.add_roles(message.author, offeringreads)
                 await myself.send_message(message.channel, message.author.mention+" is now offering readings.")
-        elif "stop":
+        elif "stop" in message.content.lower():
             if offeringreads in message.author.roles:
                 await myself.remove_roles(message.author, offeringreads)
                 await myself.send_message(message.channel, message.author.mention+" is no longer offering readings.")
@@ -30,5 +30,11 @@ async def on_member_remove(member):
     channels = member.server.channels
     botlog = [channel for channel in channels if channel.id == "311888667947827200"][0]
     await myself.send_message(botlog, member.mention + " has left the server.")
+
+@myself.event
+async def on_message_delete(message):
+    channels = member.server.channels
+    botlog = [channel for channel in channels if channel.id == "311888667947827200"][0]
+    await myself.send_message(botlog, message.author.mention + " has deleted a message: " + message.content)
 
 myself.run(clientdata["token"])
